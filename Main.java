@@ -142,3 +142,15 @@ public class Main {
     }
 }
 
+/*
+PREGUNTAS CONCEPTUALES
+
+1. ¿Por qué dos objetos de la misma clase pueden almacenar valores diferentes en sus atributos?
+Porque cada objeto tiene sus propios atributos. Aunque los dos se creen a partir de la clase Servidor, a cada uno se le pueden asignar datos distintos, pues la clase no deja de ser una plantilla.
+
+2. ¿Qué diferencia hay entre Servidor b = a; y Servidor b = new Servidor();?
+Con Servidor b = a; las dos variables hacen referencia al mismo objeto. En cambio, con new Servidor() se crea un objeto nuevo e independiente.
+
+3. ¿Por qué es importante comprobar datosValidos() antes de calcular el porcentaje?
+Porque podría haber datos incorrectos o imposibles, como un total de cero intentos. La validación evita calcular porcentajes con datos inválidos y muestra N/D, evitando así errores en el programa por operaciones matemáticas imposibles por ejemplo.
+*/
