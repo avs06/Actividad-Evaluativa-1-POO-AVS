@@ -62,8 +62,83 @@ class Servidor {
             double porcentaje = porcentajeFallos();
             System.out.println(mostrarNombre + " | " + intentosFallidos + "/" + intentosTotales + " | " + porcentaje + "% | " + estado);
         } else {
-            System.out.println(mostrarNombre + " | " + intentosFallidos + "/" + intentosTotales + " | No porcentaje | " + estado);
+            System.out.println(mostrarNombre + " | " + intentosFallidos + "/" + intentosTotales + " | N/D | " + estado);
         }
+    }
+
+    // Método para asignar un valor numérico al estado y poder compararlos
+    int prioridad() {
+        String estado = evaluarEstado();
+        if (estado.equals("BLOQUEADO")) {
+            return 3;
+        } else if (estado.equals("ALERTA")) {
+            return 2;
+        } else if (estado.equals("NORMAL")) {
+            return 1;
+        } else {
+            return 0;   // DATOS INVALIDOS
+        }
+    }
+}
+
+public class Main {
+
+    // Método que compara los dos servidores e imprime cuál requiere atención prioritaria
+    static void compararServidores(Servidor s1, Servidor s2) {
+        if (!s1.datosValidos() || !s2.datosValidos()) {
+            System.out.println("COMPARACIÓN NO DISPONIBLE");
+        } else {
+            int prioridad1 = s1.prioridad();
+            int prioridad2 = s2.prioridad();
+
+            if (prioridad1 > prioridad2) {
+                System.out.println("ATENCIÓN PRIORITARIA: " + s1.nombre.trim());
+            } else if (prioridad2 > prioridad1) {
+                System.out.println("ATENCIÓN PRIORITARIA: " + s2.nombre.trim());
+            } else {
+                System.out.println("IGUAL PRIORIDAD");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Creación y lectura del primer servidor
+        Servidor servidor1 = new Servidor();
+        System.out.print("Nombre del servidor 1: ");
+        servidor1.nombre = sc.nextLine();
+        System.out.print("Origen (interno/externo): ");
+        servidor1.origen = sc.nextLine();
+        System.out.print("Critico (si/no): ");
+        servidor1.critico = sc.nextLine();
+        System.out.print("Intentos totales: ");
+        servidor1.intentosTotales = sc.nextInt();
+        System.out.print("Intentos fallidos: ");
+        servidor1.intentosFallidos = sc.nextInt();
+        sc.nextLine(); // Limpiar salto de linea pendiente
+
+        // Creación y lectura del segundo servidor
+        Servidor servidor2 = new Servidor();
+        System.out.print("Nombre del servidor 2: ");
+        servidor2.nombre = sc.nextLine();
+        System.out.print("Origen (interno/externo): ");
+        servidor2.origen = sc.nextLine();
+        System.out.print("Critico (si/no): ");
+        servidor2.critico = sc.nextLine();
+        System.out.print("Intentos totales: ");
+        servidor2.intentosTotales = sc.nextInt();
+        System.out.print("Intentos fallidos: ");
+        servidor2.intentosFallidos = sc.nextInt();
+
+        // Salida del reporte de seguridad
+        System.out.println();
+        System.out.println("========== REPORTE DE SEGURIDAD ==========");
+        servidor1.mostrarResumen();
+        servidor2.mostrarResumen();
+        compararServidores(servidor1, servidor2);
+
+        sc.close();
     }
 }
 
